@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import WebSocketComponent from './kafka/WebSocketComponent';
+import WebSocketComponent from './websocket/WebSocketComponent';
 
 function App() {
   return (
