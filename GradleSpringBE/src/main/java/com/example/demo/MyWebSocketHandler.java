@@ -6,10 +6,12 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+//import kafkaService.KafkaMessageProducer;
 
 public class MyWebSocketHandler extends TextWebSocketHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(MyWebSocketHandler.class);
+//    private KafkaMessageProducer kafkaMessageProducer;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -27,6 +29,8 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
         String responseMessage = "Hello from the server!";
         session.sendMessage(new TextMessage(responseMessage));
         logger.info("Sent message: {}", responseMessage);
+        
+//        kafkaMessageProducer.sendMessage("my-topic", "Hello everyone!I am Caspar");
     }
 
     @Override

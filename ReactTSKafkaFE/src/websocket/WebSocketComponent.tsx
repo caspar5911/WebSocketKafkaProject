@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Kafka, logLevel } from 'kafkajs';
 
 const WebSocketComponent: React.FC = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [message, setMessage] = useState<string>('');
+  const [messages, setMessages] = useState<string[]>([]);
 
   useEffect(() => {
     // Create WebSocket connection
@@ -16,7 +18,8 @@ const WebSocketComponent: React.FC = () => {
     ws.onmessage = (event) => {
       const receivedMessage = event.data;
       console.log('Message received:', receivedMessage);
-      // Handle the received message
+      // Handle the received Kafka message
+      setMessages((prevMessages) => [...prevMessages, receivedMessage]);
     };
 
     ws.onclose = () => {
@@ -37,8 +40,8 @@ const WebSocketComponent: React.FC = () => {
     };
   }, []);
 
-  const sendMessage = () => {
-    if (socket && socket.readyState === WebSocket.OPEN) {
+  const sendMessage = async () => {
+      if (socket && socket.readyState === WebSocket.OPEN) {
       socket.send(message);
       console.log('Message sent:', message);
     }
